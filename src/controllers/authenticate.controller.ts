@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { compare } from 'bcryptjs';
-import { PrismaClient } from 'generated/prisma';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe';
 import z from 'zod';
 
@@ -20,7 +20,7 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
     
 @Controller('/sessions')
 export class AuthenticateController {
-    constructor(private jwt: JwtService, private prisma: PrismaClient) { }
+    constructor(private jwt: JwtService, private prisma: PrismaService) { }
 
     @Post()
     // @HttpCode(201)
@@ -45,6 +45,5 @@ export class AuthenticateController {
         return {
             acess_token: accessToken
         }
-    }
-  
+    } 
 }

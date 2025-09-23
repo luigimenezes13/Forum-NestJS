@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { Env } from "src/env";
-import { base64 } from "zod";
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
     imports: [PassportModule, JwtModule.registerAsync({
@@ -18,6 +18,7 @@ import { base64 } from "zod";
                 publicKey: Buffer.from(publicKey, "base64"),
             }
         }
-    })]
+    })],
+  providers: [JwtStrategy],
 })
 export class AuthModule{ }
