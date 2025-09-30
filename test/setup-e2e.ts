@@ -1,7 +1,10 @@
+import { config } from 'dotenv'
 import { PrismaClient } from '../generated/prisma'
-import 'dotenv/config'
 import { execSync } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
+
+// Load environment variables explicitly
+config({ path: '.env' })
 
 const prisma = new PrismaClient()
 
