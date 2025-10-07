@@ -8,30 +8,29 @@ config({ path: '.env' })
 
 const prisma = new PrismaClient()
 
-
 function generateUniqueDatabaseURL(schemaId: string) {
-    if (!process.env.DATABASE_URL) {
-        throw new Error('Please provide a DATABASE_URL')
-    }
+  if (!process.env.DATABASE_URL) {
+    throw new Error('Please provide a DATABASE_URL')
+  }
 
-    const url = new URL(process.env.DATABASE_URL)
+  const url = new URL(process.env.DATABASE_URL)
 
-    url.searchParams.set('schema', schemaId)
+  url.searchParams.set('schema', schemaId)
 
-    return url.toString()
+  return url.toString()
 }
 
 const schemaId = randomUUID()
 
 beforeAll(async () => {
-    const databaseURL = generateUniqueDatabaseURL(schemaId)
+  const databaseURL = generateUniqueDatabaseURL(schemaId)
 
-    process.env.DATABASE_URL = databaseURL
+  process.env.DATABASE_URL = databaseURL
 
-    execSync('pnpm prisma db push')
+  execSync('pnpm prisma db push')
 })
 
 afterAll(async () => {
-    await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`)
-    await prisma.$disconnect()
+  await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`)
+  await prisma.$disconnect()
 })
