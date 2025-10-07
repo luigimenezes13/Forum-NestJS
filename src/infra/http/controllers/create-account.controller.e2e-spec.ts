@@ -1,5 +1,5 @@
-import { AppModule } from '@/app.module'
-import { PrismaService } from '@/prisma/prisma.service'
+import { AppModule } from '@/infra/app.module'
+import { PrismaService } from '@/infra/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
@@ -35,6 +35,6 @@ describe('Create account (E2E)', () => {
       },
     })
 
-    expect(userOnDatabase).toBeTruthy
+    expect(userOnDatabase).toBeTruthy()
   })
 })
